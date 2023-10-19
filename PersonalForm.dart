@@ -1,219 +1,308 @@
 import 'package:flutter/material.dart';
-import 'package:helloworld/ui/ListData.dart';
+import 'ListData.dart';
 
-void main() {
-  runApp(PersonalForm());
+class PersonalForm extends StatefulWidget {
+  @override
+  _PersonalFormState createState() => _PersonalFormState();
 }
 
-class PersonalForm extends StatelessWidget {
+class _PersonalFormState extends State<PersonalForm> {
+  TextEditingController fullNameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController phoneNumberController = TextEditingController();
+  TextEditingController personalIdController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
+  DateTime? selectedDate;
+  bool isPhoneNumberValid = false;
+  bool agreeToTerms = false;
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Personal Form',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'Personal Form',
-            style: TextStyle(color: Colors.black),
-          ),
-          backgroundColor: Colors.white,
-          actions: [
+    return Scaffold(
+      appBar: AppBar(
+        title: Row(
+          children: [
+            Text(
+              'PERSONAL FORM',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black),
+            ),
+            Spacer(),
             IconButton(
+              icon: Icon(Icons.list, color: Colors.black),
               onPressed: () {
-                // Fungsi yang ingin Anda tambahkan saat ikon ditekan
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ListData(fullName: '', email: '', address: '')),
+                );
               },
-              icon: Icon(
-                Icons.description,
-                color: Colors.black,
-              ),
             ),
           ],
         ),
-        body: CardList(),
+        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: Colors.black),
       ),
-    );
-  }
-}
-
-class CardList extends StatefulWidget {
-  @override
-  _CardListState createState() => _CardListState();
-}
-
-class _CardListState extends State<CardList> {
-  String fullName = '';
-  String email = '';
-  String phoneNumber = '';
-  String personalID = '';
-  String address = '';
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Card(
-        margin: EdgeInsets.all(16.0),
+      body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(16.0),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text('Full Name'),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black, width: 1),
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    labelText: 'Enter FullName',
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.symmetric(horizontal: 8.0),
-                  ),
-                  onChanged: (value) {
-                    setState(() {
-                      fullName = value;
-                    });
-                  },
-                ),
-              ),
-              SizedBox(height: 10.0),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text('Email'),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black, width: 1),
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    labelText: 'Enter your Email',
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.symmetric(horizontal: 8.0),
-                  ),
-                  onChanged: (value) {
-                    setState(() {
-                      email = value;
-                    });
-                  },
-                ),
-              ),
-              SizedBox(height: 18.0),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text('Phone Number'),
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black, width: 1),
-                        borderRadius: BorderRadius.circular(5.0),
-                      ),
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                          labelText: 'Enter phone number',
-                          border: InputBorder.none,
-                          contentPadding: EdgeInsets.symmetric(horizontal: 8.0),
-                        ),
-                        onChanged: (value) {
-                          setState(() {
-                            phoneNumber = value;
-                          });
-                        },
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 8.0),
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      width: 100,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black, width: 1),
-                        borderRadius: BorderRadius.circular(5.0),
-                      ),
-                      child: Center(
-                        child: Text('Verify'),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 10.0),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text('Personal ID Number'),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black, width: 1),
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    labelText: 'Value',
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.symmetric(horizontal: 8.0),
-                  ),
-                  onChanged: (value) {
-                    setState(() {
-                      personalID = value;
-                    });
-                  },
-                ),
-              ),
-              SizedBox(height: 10.0),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text('Addres'),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black, width: 1),
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    labelText: 'Enter your text here',
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.symmetric(horizontal: 8.0),
-                  ),
-                  onChanged: (value) {
-                    setState(() {
-                      address = value;
-                    });
-                  },
-                ),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => ListData(
-                      Fullname: fullName,
-                      email: email,
-                      phoneNumber: phoneNumber,
-                      personalID: personalID,
-                      address: address,
-                    ),
-                  ));
-                },
-                child: Text('Submit'),
-              ),
+              buildTextField('Full Name', fullNameController, 'Enter your full name'),
+              buildTextField('Email', emailController, 'Enter your email'),
+              buildPhoneNumberField(),
+              buildTextField('Personal ID Number', personalIdController, 'Value'),
+              buildTextField('Address', addressController, 'Enter your text here'),
+              SizedBox(height: 10),
+              buildDateSelector(),
+              SizedBox(height: 16.0),
+              buildTermsCheckbox(),
+              SizedBox(height: 30),
+              buildSubmitButton(),
             ],
           ),
         ),
       ),
     );
+  }
+
+  Widget buildTextField(String label, TextEditingController controller, String hintText) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 16.0,
+          ),
+        ),
+        SizedBox(height: 8.0),
+        Container(
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.black),
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.0),
+            child: TextField(
+              controller: controller,
+              decoration: InputDecoration(
+                hintText: hintText,
+                border: InputBorder.none,
+              ),
+            ),
+          ),
+        ),
+        SizedBox(height: 16.0),
+      ],
+    );
+  }
+
+  Widget buildPhoneNumberField() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Phone Number',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 16.0,
+          ),
+        ),
+        SizedBox(height: 8.0),
+        Container(
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.black),
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: phoneNumberController,
+                    decoration: InputDecoration(
+                      hintText: 'Enter Phone Number',
+                      border: InputBorder.none,
+                    ),
+                  ),
+                ),
+                SizedBox(width: 8.0),
+                ElevatedButton(
+                  onPressed: () {
+                    showVerificationDialog();
+                  },
+                  child: Text('Verify', style: TextStyle(color: Color(0xff4a3de5))),
+                ),
+              ],
+            ),
+          ),
+        ),
+        SizedBox(height: 16.0),
+      ],
+    );
+  }
+
+  Widget buildVerificationCheckbox() {
+    return SizedBox(
+      height: 10,
+    );
+  }
+
+  void showVerificationDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Verification'),
+          content: Text('Verification Berhasil'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Close'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+    // Assuming verification is successful, update the state
+    setState(() {
+      isPhoneNumberValid = true;
+    });
+  }
+
+  Widget buildDateSelector() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text("Choose Date"),
+        Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+            border: Border.all(color: Color(0xff2A2A2A)),
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+          padding: EdgeInsets.all(8.0),
+          child: Row(
+            children: <Widget>[
+              Text(
+                selectedDate != null
+                    ? " ${selectedDate?.day}/${selectedDate?.month}/${selectedDate?.year}"
+                    : 'Select date',
+                style: TextStyle(fontSize: 18),
+              ),
+              Spacer(),
+              IconButton(
+                icon: Icon(Icons.calendar_today),
+                onPressed: () => selectDate(context),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(height: 1.0),
+      ],
+    );
+  }
+
+  Widget buildTermsCheckbox() {
+    return Row(
+      children: <Widget>[
+        Checkbox(
+          value: agreeToTerms,
+          onChanged: (bool? value) {
+            setState(() {
+              agreeToTerms = value ?? false;
+            });
+          },
+        ),
+        Expanded(
+          child: Text(
+            'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.',
+            style: TextStyle(fontSize: 14),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildSubmitButton() {
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        onPressed: () {
+          if (validateAndProceed()) {
+            if (isPhoneNumberValid) {
+              // Save the data and navigate to ListData page
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ListData(
+                    fullName: fullNameController.text,
+                    email: emailController.text,
+                    address: addressController.text,
+                  ),
+                ),
+              );
+            } else {
+              // Show a message that verification is required
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    title: Text('Verification Required'),
+                    content: Text('Please verify your phone number before submitting.'),
+                  );
+                },
+              );
+            }
+          } else {
+            // Show a message that all fields are required
+            showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  title: Text('All Fields Required'),
+                  content: Text('Please fill in all fields before submitting.'),
+                );
+              },
+            );
+          }
+        },
+        child: Text('Submit'),
+      ),
+    );
+  }
+
+  bool validateAndProceed() {
+    if (agreeToTerms &&
+        fullNameController.text.isNotEmpty &&
+        emailController.text.isNotEmpty &&
+        phoneNumberController.text.isNotEmpty &&
+        personalIdController.text.isNotEmpty &&
+        addressController.text.isNotEmpty &&
+        selectedDate != null) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  void selectDate(BuildContext context) async {
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+
+    if (pickedDate != null && pickedDate != selectedDate) {
+      setState(() {
+        selectedDate = pickedDate;
+      });
+    }
   }
 }
